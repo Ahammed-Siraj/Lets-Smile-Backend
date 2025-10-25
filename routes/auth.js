@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const divisionCredentials = {
   MANJESHWARAM: "MANJE2680",
 };
+
 // Static sector credentials (Option 1)
 const sectorCredentials = {
   BAKRABAIL: "PATHO2645",
