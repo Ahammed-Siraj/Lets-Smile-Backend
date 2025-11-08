@@ -25,16 +25,45 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ✅ POST /api/form - Create new record
+// // ✅ POST /api/form - Create new record
+// router.post("/", async (req, res) => {
+//   try {
+//     const { sector, unit, name, className, school, age, fatherName, number } =
+//       req.body;
+
+//     if (!sector || !unit) {
+//       return res
+//         .status(400)
+//         .json({ message: "Division, Sector, and Unit are required" });
+//     }
+
+//     const newRecord = new Registration({
+//       sector,
+//       unit,
+//       name,
+//       className,
+//       school,
+//       age,
+//       fatherName,
+//       number,
+//     });
+
+//     await newRecord.save();
+//     res
+//       .status(201)
+//       .json({ message: "Record created successfully", record: newRecord });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error creating record" });
+//   }
+// });
 router.post("/", async (req, res) => {
   try {
     const { sector, unit, name, className, school, age, fatherName, number } =
       req.body;
 
     if (!sector || !unit) {
-      return res
-        .status(400)
-        .json({ message: "Division, Sector, and Unit are required" });
+      return res.status(400).json({ message: "Sector and Unit are required" });
     }
 
     const newRecord = new Registration({
@@ -49,12 +78,16 @@ router.post("/", async (req, res) => {
     });
 
     await newRecord.save();
-    res
+
+    console.log("✅ Record saved:", newRecord);
+    return res
       .status(201)
       .json({ message: "Record created successfully", record: newRecord });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error creating record" });
+    console.error("❌ Error creating record:", error);
+    return res
+      .status(500)
+      .json({ message: "Error creating record", error: error.message });
   }
 });
 
